@@ -21,16 +21,18 @@ import static ru.hse.userservice.utils.constants.SwaggerConstants.SUCCESS;
 
 @Tag(name = "Users API", description = "Общие операции над пользователями со стороны " +
         "текущего авторизованного пользователя")
-@RequestMapping("/user")
+@RequestMapping("/user/{userid}")
 public interface UsersController {
     @Operation(summary = "Поиск пользователей по критериям",
             description = "Позволяет найти пользователей по никнейму или набору тегов." +
-                    "Теги должны быть представлены своими идентификаторами")
+                    "Теги должны быть представлены своими идентификаторами; " +
+                    "Операция должна быть доступна модератору")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @GetMapping("/search")
     ResponseEntity<List<ShortUserResponse>> searchByCriteria(
+            @PathVariable int userid,
             @RequestParam("nickname") String nickname,
             @RequestParam("tags") List<String> tagIds);
 
@@ -41,6 +43,7 @@ public interface UsersController {
     })
     @PostMapping("/{id}/report")
     ResponseEntity<ShortUserResponse> reportUser(
+            @PathVariable int userid,
             @Valid @RequestBody ReportRequest reportRequest,
             @PathVariable int id);
 }

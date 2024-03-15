@@ -19,14 +19,15 @@ import static ru.hse.userservice.utils.constants.SwaggerConstants.SUCCESS;
 
 @Tag(name = "Profiles API", description = "Операции над профилем авторизованного пользователя " +
         "и получения данных профилей других пользователей")
-@RequestMapping("/user/profile")
+@RequestMapping("/profile/{userid}")
 public interface ProfileController {
     @Operation(summary = "Редактирование никнейма")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
-    @PatchMapping
+    @PatchMapping("/")
     ResponseEntity<FullProfileResponse> editNickname(
+            @PathVariable int userid,
             @Valid @RequestBody ProfileChangeRequest profileChangeRequest);
 
     @Operation(summary = "Получение профиля",
@@ -36,7 +37,9 @@ public interface ProfileController {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @GetMapping("/{id}")
-    ResponseEntity<FullProfileResponse> getProfileData(@PathVariable int id);
+    ResponseEntity<FullProfileResponse> getProfileData(
+            @PathVariable int userid,
+            @PathVariable int id);
 
     @Operation(summary = "Смена видимости полей",
             description = "Меняет видимость переданного поля " +
@@ -46,5 +49,6 @@ public interface ProfileController {
                     "AuditoriumService)")
     @PatchMapping("/visibility")
     ResponseEntity<FullProfileResponse> changeVisibility(
+            @PathVariable int userid,
             @Valid @RequestBody VisibilityChangeRequest visibilityChangeRequest);
 }

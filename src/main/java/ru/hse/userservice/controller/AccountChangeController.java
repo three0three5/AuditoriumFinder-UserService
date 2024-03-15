@@ -22,15 +22,15 @@ import static ru.hse.userservice.utils.constants.SwaggerConstants.SUCCESS;
         "исключительно для AuthService для поддержки консистентности данных " +
         "об аккаунте и профиле. Api Gateway ни в коем случае не должен пересылать " +
         "сюда запросы")
-@RequestMapping("/account/{id}")
+@RequestMapping("/account")
 public interface AccountChangeController {
     @Operation(summary = "Создание профиля",
-            description = "Выполняется сразу после создания аккаунта")
+            description = "Выполняется сразу после создания аккаунта. У модераторов профилей нет")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = SUCCESS)
     })
     @PostMapping
-    ResponseEntity<FullProfileResponse> createProfile(@PathVariable int id,
+    ResponseEntity<FullProfileResponse> createProfile(
             @Valid @RequestBody ProfileCreateRequest profileCreateRequest);
 
     @Operation(summary = "Удаление профиля",
@@ -39,22 +39,22 @@ public interface AccountChangeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
-    @DeleteMapping
-    ResponseEntity<ShortUserResponse> deleteProfile(@PathVariable String id);
+    @DeleteMapping("/{userid}")
+    ResponseEntity<ShortUserResponse> deleteProfile(@PathVariable int userid);
 
     @Operation(summary = "Удаление телеграма",
             description = "Удаляет из профиля запись о телеграме")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
-    @DeleteMapping("/tg")
-    ResponseEntity<FullProfileResponse> removeTelegram(@PathVariable String id);
+    @DeleteMapping("/{userid}/tg")
+    ResponseEntity<FullProfileResponse> removeTelegram(@PathVariable int userid);
 
     @Operation(summary = "Добавление телеграма",
             description = "Добавляет в профиль запись о телеграме (видимость по умолчанию private)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
-    @PatchMapping("/tg")
-    ResponseEntity<FullProfileResponse> addTelegram(@PathVariable String id);
+    @PatchMapping("/{userid}/tg")
+    ResponseEntity<FullProfileResponse> addTelegram(@PathVariable int userid);
 }
