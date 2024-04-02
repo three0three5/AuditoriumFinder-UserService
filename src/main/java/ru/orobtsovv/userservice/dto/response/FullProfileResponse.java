@@ -1,5 +1,6 @@
 package ru.orobtsovv.userservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -16,9 +17,11 @@ public class FullProfileResponse {
     private List<TagResponse> userTags;
 
     private String telegramHandler;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private FieldVisibility telegramVisibility;
 
     private String email;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private FieldVisibility emailVisibility;
 
     private boolean isFriend;
