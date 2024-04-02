@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.orobtsovv.userservice.dto.response.BanInfoResponse;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.dto.response.ReportInfoResponse;
 import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
@@ -31,13 +30,6 @@ public interface ModeratorController {
     @GetMapping("/reports")
     ResponseEntity<List<ReportInfoResponse>> getListOfReportedUsers();
 
-    @Operation(summary = "Список банов")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = SUCCESS)
-    })
-    @GetMapping("/banned")
-    ResponseEntity<List<BanInfoResponse>> getListOfBannedUsers();
-
     @Operation(summary = "Отклонить репорт")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
@@ -56,16 +48,6 @@ public interface ModeratorController {
     })
     @PostMapping("/{id}/ban")
     ResponseEntity<ShortUserResponse> banUser(
-            @RequestHeader int userid,
-            @PathVariable int id);
-
-    @Operation(summary = "Удалить пользователя из забаненных",
-            description = "Сервис должен взаимодействовать с AuthService")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = SUCCESS)
-    })
-    @PostMapping("/{id}/cancel_ban")
-    ResponseEntity<ShortUserResponse> removeUserFromBanned(
             @RequestHeader int userid,
             @PathVariable int id);
 

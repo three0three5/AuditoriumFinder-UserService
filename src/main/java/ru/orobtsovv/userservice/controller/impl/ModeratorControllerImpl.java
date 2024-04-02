@@ -18,22 +18,12 @@ public class ModeratorControllerImpl implements ModeratorController {
     }
 
     @Override
-    public ResponseEntity<List<BanInfoResponse>> getListOfBannedUsers() {
-        return null;
-    }
-
-    @Override
     public ResponseEntity<ReportInfoResponse> declineReport(int moderatorId, int id) {
         return null;
     }
 
     @Override
     public ResponseEntity<ShortUserResponse> banUser(int moderatorId, int id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<ShortUserResponse> removeUserFromBanned(int moderatorId, int id) {
         return null;
     }
 
