@@ -34,8 +34,8 @@ public interface UsersController {
     @GetMapping("/search")
     ResponseEntity<List<ShortUserResponse>> searchByCriteria(
             @RequestHeader int userid,
-            @RequestParam("nickname") String nickname,
-            @RequestParam("tags") List<String> tagIds);
+            @RequestParam(value = "nickname", required = false) String nickname,
+            @RequestParam(value = "tags", required = false) List<String> tagIds);
 
     @Operation(summary = "Отправка жалобы на юзера",
             description = "Позволяет отправить репорт с предоставлением описания жалобы")

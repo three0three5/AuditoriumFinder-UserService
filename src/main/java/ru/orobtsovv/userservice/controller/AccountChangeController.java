@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
@@ -56,5 +57,7 @@ public interface AccountChangeController {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @PatchMapping("/{userid}/tg")
-    ResponseEntity<FullProfileResponse> addTelegram(@PathVariable int userid); // TODO хэндл добавить
+    ResponseEntity<FullProfileResponse> addTelegram(
+            @PathVariable int userid,
+            @RequestParam(name = "telegram_handle") String telegramHandle); // TODO хэндл добавить
 }

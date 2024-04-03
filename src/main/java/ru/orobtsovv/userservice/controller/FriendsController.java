@@ -52,7 +52,7 @@ public interface FriendsController {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @PatchMapping("/{id}/remove")
-    ResponseEntity<ShortUserResponse> removeFromFriendList(
+    ResponseEntity<ShortMessageResponse> removeFromFriendList(
             @PathVariable int id,
             @RequestHeader int userid);
 }
