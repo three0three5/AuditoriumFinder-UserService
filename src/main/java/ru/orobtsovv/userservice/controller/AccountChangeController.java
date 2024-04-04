@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
-import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
 
 import static ru.orobtsovv.userservice.utils.constants.SwaggerConstants.SUCCESS;
 

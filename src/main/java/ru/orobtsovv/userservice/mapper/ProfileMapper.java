@@ -1,14 +1,16 @@
 package ru.orobtsovv.userservice.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
-import ru.orobtsovv.userservice.domain.entity.TagEntity;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
-import ru.orobtsovv.userservice.dto.response.TagResponse;
 
 @Service
+@RequiredArgsConstructor
 public class ProfileMapper {
+    private final TagMapper tagMapper;
+
     public FullProfileResponse profileEntityToFullProfileResponse(ProfileEntity entity) {
         return new FullProfileResponse()
                 .setNickname(entity.getNickname())
@@ -17,14 +19,7 @@ public class ProfileMapper {
                 .setTelegramHandle(entity.getTelegramHandle())
                 .setEmailVisibility(entity.getEmailVisibility())
                 .setTelegramVisibility(entity.getTelegramVisibility())
-                .setTags(entity.getTags().stream().map(this::tagEntityToTagResponse).toList());
-    }
-
-    public TagResponse tagEntityToTagResponse(TagEntity entity) {
-        return new TagResponse()
-                .setTagId(entity.getTagId())
-                .setName(entity.getName())
-                .setDescription(entity.getDescription());
+                .setTags(entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList());
     }
 
     public ProfileEntity profileCreateRequestToProfileEntity(ProfileCreateRequest request) {
