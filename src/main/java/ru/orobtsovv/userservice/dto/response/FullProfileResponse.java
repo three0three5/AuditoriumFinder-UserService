@@ -12,11 +12,11 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class FullProfileResponse {
-    private int userId;
-    private String userNickname;
-    private List<TagResponse> userTags;
+    private int userid;
+    private String nickname;
+    private List<TagResponse> tags;
 
-    private String telegramHandler;
+    private String telegramHandle;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private FieldVisibility telegramVisibility;
 
@@ -24,5 +24,5 @@ public class FullProfileResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private FieldVisibility emailVisibility;
 
-    private boolean isFriend;
+    private Boolean isFriend;
 }

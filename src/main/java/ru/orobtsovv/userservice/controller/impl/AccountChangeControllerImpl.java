@@ -2,11 +2,12 @@ package ru.orobtsovv.userservice.controller.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.userservice.controller.AccountChangeController;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
-import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
+import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 import ru.orobtsovv.userservice.service.impl.ProfileService;
 
 @RestController
@@ -20,7 +21,8 @@ public class AccountChangeControllerImpl implements AccountChangeController {
     }
 
     @Override
-    public ResponseEntity<ShortUserResponse> deleteProfile(int userid) {
+    @Transactional
+    public ResponseEntity<ShortMessageResponse> deleteProfile(int userid) {
         return ResponseEntity.ok(profileService.deleteProfile(userid));
     }
 
