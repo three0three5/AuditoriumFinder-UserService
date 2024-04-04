@@ -18,12 +18,6 @@ public class DeleteService {
     public void deleteAllInfo(int userid) {
         subscribeRepository.deleteAllSubscriptions(userid);
         requestRepository.deleteAllRequests(userid);
-        profileRepository.deleteById(userid); // TODO проверить что friends link удаляется
-        /*
-        TODO
-        1. удаление аккаунта у AuthService
-        2. удаление уведомлений у NotificationService
-        3. удаление местоположений у AudService
-         */
+        profileRepository.deleteById(userid); // TODO проверить что friends link удаляется для обоих отношений
     }
 }

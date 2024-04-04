@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
-import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 
 import static ru.orobtsovv.userservice.utils.constants.SwaggerConstants.SUCCESS;
 
@@ -33,15 +32,6 @@ public interface AccountChangeController {
     @PostMapping
     ResponseEntity<FullProfileResponse> createProfile(
             @Valid @RequestBody ProfileCreateRequest profileCreateRequest);
-
-    @Operation(summary = "Удаление профиля",
-            description = "Удаляет все ассоциации в UserService, связанные с данным" +
-                    "аккаунтом")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = SUCCESS)
-    })
-    @DeleteMapping("/{userid}")
-    ResponseEntity<ShortMessageResponse> deleteProfile(@PathVariable int userid);
 
     @Operation(summary = "Удаление телеграма",
             description = "Удаляет из профиля запись о телеграме")

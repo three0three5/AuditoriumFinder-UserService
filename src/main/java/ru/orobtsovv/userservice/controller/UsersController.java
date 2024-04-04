@@ -27,15 +27,16 @@ public interface UsersController {
     @Operation(summary = "Поиск пользователей по критериям",
             description = "Позволяет найти пользователей по никнейму или набору тегов." +
                     "Теги должны быть представлены своими идентификаторами; " +
-                    "Операция должна быть доступна модератору")
+                    "Операция должна быть доступна модератору;" +
+                    " БУДЕТ ЗАМЕНЕНО НА ВАРИАНТ С ПАГИНАЦИЕЙ!")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @GetMapping("/search")
     ResponseEntity<List<ShortUserResponse>> searchByCriteria(
-            @RequestHeader int userid,
             @RequestParam(value = "nickname", required = false) String nickname,
-            @RequestParam(value = "tags", required = false) List<String> tagIds);
+            @RequestParam(value = "tags", required = false) List<String> tagIds,
+            @RequestParam(value = "id", required = false) Integer id);
 
     @Operation(summary = "Отправка жалобы на юзера",
             description = "Позволяет отправить репорт с предоставлением описания жалобы")

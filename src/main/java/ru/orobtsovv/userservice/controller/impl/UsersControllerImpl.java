@@ -18,9 +18,9 @@ public class UsersControllerImpl implements UsersController {
     private final ReportService reportService;
 
     @Override
-    public ResponseEntity<List<ShortUserResponse>> searchByCriteria(
-            int userid, String nickname, List<String> tagIds) {
-        return ResponseEntity.ok(service.searchBy(userid, nickname, tagIds));
+    public ResponseEntity<List<ShortUserResponse>> searchByCriteria( // TODO заменить на Pageable
+            String nickname, List<String> tagIds, Integer id) {
+        return ResponseEntity.ok(service.searchBy(nickname, tagIds, id));
     }
 
     @Override

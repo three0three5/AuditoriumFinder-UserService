@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
+import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
+import ru.orobtsovv.userservice.model.FieldVisibility;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,28 @@ public class ProfileMapper {
 
     public FullProfileResponse profileEntityToFullProfileResponseFiltered(
             ProfileEntity entity, boolean areFriends) {
-        return null; // TODO
+        FieldVisibility email = entity.getEmailVisibility();
+        FieldVisibility tg = entity.getTelegramVisibility();
+        FullProfileResponse response = new FullProfileResponse()
+                .setNickname(entity.getNickname())
+                .setUserid(entity.getUserid())
+                .setEmailVisibility(email)
+                .setTelegramVisibility(tg)
+                .setTags(entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList());
+        if (FieldVisibility.PUBLIC.equals(email) ||
+                FieldVisibility.FRIENDS_ONLY.equals(email) && areFriends) {
+            response.setEmail(entity.getEmail());
+        }
+        if (FieldVisibility.PUBLIC.equals(tg) ||
+                FieldVisibility.FRIENDS_ONLY.equals(tg) && areFriends) {
+            response.setTelegramHandle(entity.getTelegramHandle());
+        }
+        return response;
+    }
+
+    public ShortUserResponse profileEntityToShortUserResponse(ProfileEntity profileEntity) {
+        return new ShortUserResponse()
+                .setUserid(profileEntity.getUserid())
+                .setUserNickname(profileEntity.getNickname());
     }
 }

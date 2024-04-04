@@ -2,11 +2,13 @@ package ru.orobtsovv.userservice.controller.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.userservice.controller.ModeratorController;
+import ru.orobtsovv.userservice.dto.request.BanRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.dto.response.ReportInfoResponse;
-import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
+import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 import ru.orobtsovv.userservice.service.impl.BanService;
 import ru.orobtsovv.userservice.service.impl.ProfileService;
 import ru.orobtsovv.userservice.service.impl.ReportService;
@@ -25,15 +27,15 @@ public class ModeratorControllerImpl implements ModeratorController {
         return ResponseEntity.ok(reportService.getAllReports());
     }
 
-
     @Override
     public ResponseEntity<ReportInfoResponse> declineReport(int moderatorId, int id) {
         return ResponseEntity.ok(reportService.declineReport(moderatorId, id));
     }
 
     @Override
-    public ResponseEntity<ShortUserResponse> banUser(int moderatorId, int id) {
-        return ResponseEntity.ok(banService.ban(moderatorId, id));
+    @Transactional
+    public ResponseEntity<ShortMessageResponse> banUser(BanRequest request) {
+        return ResponseEntity.ok(banService.ban(request));
     }
 
     @Override

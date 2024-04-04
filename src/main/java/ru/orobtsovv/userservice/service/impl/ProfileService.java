@@ -8,17 +8,13 @@ import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
-import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.ProfileMapper;
-
-import static ru.orobtsovv.userservice.utils.constants.CommonConstants.DELETED_PROFILE_SUCCESS;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
-    private final DeleteService deleteService;
     private final ProfileMapper profileMapper;
 
     public FullProfileResponse createProfile(ProfileCreateRequest profileCreateRequest) {
@@ -27,12 +23,6 @@ public class ProfileService {
         return new FullProfileResponse()
                 .setUserid(entity.getUserid())
                 .setNickname(entity.getNickname());
-    }
-
-    public ShortMessageResponse deleteProfile(int userid) {
-        deleteService.deleteAllInfo(userid);
-        return new ShortMessageResponse()
-                .setMessage(DELETED_PROFILE_SUCCESS.formatted(userid));
     }
 
 
@@ -65,7 +55,7 @@ public class ProfileService {
     public FullProfileResponse getFilteredProfile(int userid, Integer id) {
         ProfileEntity entity = profileRepository.findById(userid)
                 .orElseThrow(ProfileNotFoundException::new);
-        if (id == null) {
+        if (id == null || id.equals(userid)) {
             return profileMapper.profileEntityToFullProfileResponse(entity);
         }
         boolean areFriends = profileRepository.areFriends(userid, id);
