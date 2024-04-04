@@ -28,7 +28,7 @@ public class ModeratorControllerImpl implements ModeratorController {
     }
 
     @Override
-    public ResponseEntity<ReportInfoResponse> declineReport(int moderatorId, int id) {
+    public ResponseEntity<ShortMessageResponse> declineReport(int moderatorId, long id) {
         return ResponseEntity.ok(reportService.declineReport(moderatorId, id));
     }
 

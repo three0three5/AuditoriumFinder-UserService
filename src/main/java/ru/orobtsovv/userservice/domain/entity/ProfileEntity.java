@@ -1,6 +1,5 @@
 package ru.orobtsovv.userservice.domain.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -45,7 +44,7 @@ public class ProfileEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tag_id"))
     private Set<TagEntity> tags = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "friends_link",
             joinColumns = @JoinColumn(name = "linked1", referencedColumnName = "userid"),
             inverseJoinColumns = @JoinColumn(name = "linked2", referencedColumnName = "userid"))

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class ReportInfoResponse {
+    private long reportId;
     private int reportFromId;
     private int reportedUserId;
     private FullProfileResponse reportedUserProfile;

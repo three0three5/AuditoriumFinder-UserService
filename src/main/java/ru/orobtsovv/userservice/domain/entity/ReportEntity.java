@@ -33,4 +33,10 @@ public class ReportEntity {
     @CreationTimestamp
     @Column
     private LocalDateTime createdAt;
+
+    @Column
+    private String description;
+
+    @Column
+    private Integer deletedBy;
 }

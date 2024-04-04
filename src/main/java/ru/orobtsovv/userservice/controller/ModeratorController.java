@@ -33,14 +33,14 @@ public interface ModeratorController {
     @GetMapping("/reports")
     ResponseEntity<List<ReportInfoResponse>> getListOfReportedUsers();
 
-    @Operation(summary = "Отклонить репорт")
+    @Operation(summary = "Отклонить репорт с определенным id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @PostMapping("/reports/{id}/decline")
-    ResponseEntity<ReportInfoResponse> declineReport(
+    ResponseEntity<ShortMessageResponse> declineReport(
             @RequestHeader int userid,
-            @PathVariable int id);
+            @PathVariable long id);
 
     @Operation(summary = "Забанить пользователя",
             description = "Сервис должен взаимодействовать с AuthService, чтобы " +
