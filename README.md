@@ -1,4 +1,12 @@
-### Patch note 0.1.0
+### Environment variables
 
-- Исправлены эндпоинты для возможности получения id юзера, отправляющего запрос. 
-- Окончательно доделаны api эндпоинтов 
+#### Опциональные параметры:
+
+SPRING_PROFILE - опционально; основные значения: with-mocks, development, email-mock;
+
+- with-mocks - все сервисы заменяются на заглушки (по умолчанию)
+- development - без заглушек
+
+#### Обязательные параметры:
+
+DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
