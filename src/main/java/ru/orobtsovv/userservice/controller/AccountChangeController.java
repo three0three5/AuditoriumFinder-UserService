@@ -49,5 +49,5 @@ public interface AccountChangeController {
     @PatchMapping("/{userid}/tg")
     ResponseEntity<FullProfileResponse> addTelegram(
             @PathVariable int userid,
-            @RequestParam(name = "telegram_handle") String telegramHandle); // TODO хэндл добавить
+            @RequestParam(name = "telegram_handle") String telegramHandle);
 }
