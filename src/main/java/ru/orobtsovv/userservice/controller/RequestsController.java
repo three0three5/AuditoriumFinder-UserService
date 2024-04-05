@@ -37,7 +37,7 @@ public interface RequestsController {
     @Operation(summary = "Отправить заявку в друзья или принять запрос",
             description = "Принять запрос от " +
                     "указанного в пути id к userid. Если такой id не отправлял заявку, " +
-                    "будет отправлен запрос, если такого id не существует - ничего не произойдет;" +
+                    "будет отправлен запрос, если такого id не существует - 404;" +
                     " в зависимости от существования id, возвращается тело добавленного пользователя")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
@@ -48,7 +48,8 @@ public interface RequestsController {
             @PathVariable int id);
 
     @Operation(summary = "Отклонить запрос в друзья", description = "Логика подобна" +
-            "предыдущему методу. Запрос от id к userid (входящая)")
+            "предыдущему методу. Запрос от id к userid (входящая). Возвращается короткий профиль " +
+            "стороннего пользователя")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
@@ -58,7 +59,7 @@ public interface RequestsController {
             @PathVariable int id);
 
     @Operation(summary = "Отклонить запрос в друзья", description = "Отменить запрос в друзья" +
-            "от userid к id (исходящую)")
+            "от userid к id (исходящую), возвращается короткий профиль стороннего пользователя")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })

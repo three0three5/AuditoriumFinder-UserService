@@ -2,7 +2,7 @@ package ru.orobtsovv.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.orobtsovv.userservice.dto.messages.ProfileDeleteEvent;
+import ru.orobtsovv.userservice.dto.messages.ProfileDeleteMessage;
 import ru.orobtsovv.userservice.dto.request.BanRequest;
 
 @Service
@@ -10,7 +10,7 @@ import ru.orobtsovv.userservice.dto.request.BanRequest;
 public class MessageQueryService {
 
     public void sendDeletedProfile(BanRequest request) {
-        ProfileDeleteEvent event = new ProfileDeleteEvent()
+        ProfileDeleteMessage event = new ProfileDeleteMessage()
                 .setModeratorId(request.getModeratorId())
                 .setBannedUntil(request.getBannedUntil())
                 .setUserid(request.getUserid())

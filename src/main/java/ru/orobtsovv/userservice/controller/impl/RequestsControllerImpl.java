@@ -31,11 +31,11 @@ public class RequestsControllerImpl implements RequestsController {
 
     @Override
     public ResponseEntity<ShortUserResponse> declineIncomingRequestFromUser(int userid, int id) {
-        return ResponseEntity.ok(service.declineRequest(userid, id));
+        return ResponseEntity.ok(service.deleteRequest(id, userid, true));
     }
 
     @Override
     public ResponseEntity<ShortUserResponse> removeOutgoingRequest(int userid, int id) {
-        return ResponseEntity.ok(service.cancelRequest(userid, id));
+        return ResponseEntity.ok(service.deleteRequest(userid, id, false));
     }
 }

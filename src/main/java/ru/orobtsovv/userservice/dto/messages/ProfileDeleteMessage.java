@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class ProfileDeleteEvent {
+public class ProfileDeleteMessage {
     private int userid;
     private int moderatorId;
     private LocalDateTime bannedUntil;

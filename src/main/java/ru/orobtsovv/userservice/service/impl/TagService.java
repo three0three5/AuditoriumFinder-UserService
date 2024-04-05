@@ -37,7 +37,7 @@ public class TagService {
         return entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList();
     }
 
-    public List<TagResponse> getAllTags() {
+    public List<TagResponse> getAllTags() { // TODO пагинация
         return tagRepository.findAll().stream().map(tagMapper::tagEntityToTagResponse).toList();
     }
 }
