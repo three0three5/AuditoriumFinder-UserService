@@ -11,9 +11,9 @@ import ru.orobtsovv.userservice.dto.request.BanRequest;
 @Profile("with-mocks")
 public class MessageQueryService {
 
-    public void sendDeletedProfile(BanRequest request) {
+    public void sendDeletedProfile(int moderatorId, BanRequest request) {
         ProfileDeleteMessage event = new ProfileDeleteMessage()
-                .setModeratorId(request.getModeratorId())
+                .setModeratorId(moderatorId)
                 .setBannedUntil(request.getBannedUntil())
                 .setUserid(request.getUserid())
                 .setReason(request.getReason());

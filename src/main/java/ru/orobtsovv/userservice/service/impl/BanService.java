@@ -17,10 +17,10 @@ public class BanService {
     private final ReportRepository reportRepository;
 
     @Transactional
-    public ShortMessageResponse ban(BanRequest request) {
+    public ShortMessageResponse ban(int moderatorId, BanRequest request) {
         deleteService.deleteAllInfo(request.getUserid());
         reportRepository.deleteReports(request.getUserid());
-        queryService.sendDeletedProfile(request);
+        queryService.sendDeletedProfile(moderatorId, request);
         return new ShortMessageResponse(DELETED_PROFILE_SUCCESS);
     }
 }

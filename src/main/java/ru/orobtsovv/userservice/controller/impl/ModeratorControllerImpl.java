@@ -34,8 +34,8 @@ public class ModeratorControllerImpl implements ModeratorController {
 
     @Override
     @Transactional
-    public ResponseEntity<ShortMessageResponse> banUser(BanRequest request) {
-        return ResponseEntity.ok(banService.ban(request));
+    public ResponseEntity<ShortMessageResponse> banUser(int moderatorId, BanRequest request) {
+        return ResponseEntity.ok(banService.ban(moderatorId, request));
     }
 
     @Override
