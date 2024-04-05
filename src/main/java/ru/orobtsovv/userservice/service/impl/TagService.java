@@ -11,6 +11,7 @@ import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.TagMapper;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class TagService {
     public List<TagResponse> removeTags(int userid, List<String> tagIds) {
         ProfileEntity entity = profileRepository.findById(userid)
                 .orElseThrow(ProfileNotFoundException::new);
-        List<TagEntity> toRemove = tagRepository.findAllById(tagIds);
+        Set<TagEntity> toRemove = tagRepository.findAllByIdSet(tagIds);
         entity.getTags().removeAll(toRemove);
         profileRepository.save(entity);
         return entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList();
