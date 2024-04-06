@@ -2,8 +2,6 @@ package ru.orobtsovv.userservice.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ReportEntity;
 import ru.orobtsovv.userservice.dto.response.ReportInfoResponse;
 
