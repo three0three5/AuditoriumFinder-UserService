@@ -19,3 +19,6 @@ spring:
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: embedded
