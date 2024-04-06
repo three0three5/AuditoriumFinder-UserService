@@ -1,6 +1,5 @@
 package ru.orobtsovv.userservice.controller.impl;
 
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

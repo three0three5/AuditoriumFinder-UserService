@@ -16,7 +16,7 @@ import static ru.orobtsovv.userservice.utils.constants.CommonConstants.DELETED_P
 @Slf4j
 public class BanService {
     private final DeleteService deleteService;
-    private final MessageQueryService queryService;
+    private final MessageQueryServiceMock queryService;
     private final ReportRepository reportRepository;
 
     @Transactional

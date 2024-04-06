@@ -42,7 +42,8 @@ public class ProfileMapper {
                 .setUserid(entity.getUserid())
                 .setEmailVisibility(email)
                 .setTelegramVisibility(tg)
-                .setTags(entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList());
+                .setTags(entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList())
+                .setIsFriend(areFriends);
         if (FieldVisibility.PUBLIC.equals(email) ||
                 FieldVisibility.FRIENDS_ONLY.equals(email) && areFriends) {
             response.setEmail(entity.getEmail());

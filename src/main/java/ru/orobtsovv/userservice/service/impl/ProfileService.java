@@ -1,6 +1,7 @@
 package ru.orobtsovv.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import ru.orobtsovv.userservice.mapper.ProfileMapper;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileMapper profileMapper;
@@ -47,6 +49,7 @@ public class ProfileService {
         return profileMapper.profileEntityToFullProfileResponse(entity);
     }
 
+    @Transactional
     public FullProfileResponse editNickname(int userid, ProfileChangeRequest profileChangeRequest) {
         ProfileEntity entity = profileRepository.findById(userid).orElseThrow(ProfileNotFoundException::new);
         entity.setNickname(profileChangeRequest.getNickname());
@@ -54,16 +57,20 @@ public class ProfileService {
         return profileMapper.profileEntityToFullProfileResponse(entity);
     }
 
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public FullProfileResponse getFilteredProfile(int userid, Integer id) {
-        ProfileEntity entity = profileRepository.findById(userid)
-                .orElseThrow(ProfileNotFoundException::new);
         if (id == null || id.equals(userid)) {
+            ProfileEntity entity = profileRepository.findById(userid)
+                    .orElseThrow(ProfileNotFoundException::new);
             return profileMapper.profileEntityToFullProfileResponse(entity);
         }
+        ProfileEntity entity = profileRepository.findById(id)
+                .orElseThrow(ProfileNotFoundException::new);
         boolean areFriends = profileRepository.areFriends(userid, id);
         return profileMapper.profileEntityToFullProfileResponseFiltered(entity, areFriends);
     }
 
+    @Transactional
     public FullProfileResponse changeVisibility(int userid, VisibilityChangeRequest visibilityChangeRequest) {
         ProfileEntity entity = profileRepository.findById(userid).orElseThrow(ProfileNotFoundException::new);
         boolean isEmailNull = visibilityChangeRequest.getEmailVisibility() == null;

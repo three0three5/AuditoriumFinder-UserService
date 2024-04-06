@@ -28,26 +28,27 @@ public interface FriendsController {
     @GetMapping("/")
     ResponseEntity<List<ShortUserResponse>> getFriendList(@RequestHeader int userid);
 
-    @Operation(summary = "Подписка на обновления пользователя с указанным id",
-            description = "Если не является другом - ничего не происходит")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = SUCCESS)
-    })
-    @PostMapping("/{id}/subscribe")
-    ResponseEntity<ShortMessageResponse> subscribeToNotificationsFromUser(
-            @PathVariable int id,
-            @RequestHeader int userid);
+//    @Operation(summary = "Подписка на обновления пользователя с указанным id",
+//            description = "Если не является другом - ничего не происходит")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = SUCCESS)
+//    })
+//    @PostMapping("/{id}/subscribe")
+//    ResponseEntity<ShortMessageResponse> subscribeToNotificationsFromUser(
+//            @PathVariable int id,
+//            @RequestHeader int userid);
+//
+//    @Operation(summary = "Отмена подписки на обновления пользователя с указанным id")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = SUCCESS)
+//    })
+//    @PostMapping("/{id}/unsubscribe")
+//    ResponseEntity<ShortMessageResponse> unsubscribeFromNotificationsFromUser(
+//            @PathVariable int id,
+//            @RequestHeader int userid);
 
-    @Operation(summary = "Отмена подписки на обновления пользователя с указанным id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = SUCCESS)
-    })
-    @PostMapping("/{id}/unsubscribe")
-    ResponseEntity<ShortMessageResponse> unsubscribeFromNotificationsFromUser(
-            @PathVariable int id,
-            @RequestHeader int userid);
-
-    @Operation(summary = "Удалить из друзей пользователя с указанным id")
+    @Operation(summary = "Удалить из друзей пользователя с указанным id",
+            description = "Если пользователя нет в списках друзей, вернется 404")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })

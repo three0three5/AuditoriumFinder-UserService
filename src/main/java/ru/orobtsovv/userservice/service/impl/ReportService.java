@@ -3,6 +3,7 @@ package ru.orobtsovv.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.entity.ReportEntity;
@@ -29,6 +30,7 @@ public class ReportService {
     private final ProfileRepository profileRepository;
     private final ReportMapper mapper;
 
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<ReportInfoResponse> getAllReports() { // TODO пагинация
         return repository.findAllByDeletedBy(null).stream()
                 .map(mapper::reportEntityToReportInfoResponse).toList();

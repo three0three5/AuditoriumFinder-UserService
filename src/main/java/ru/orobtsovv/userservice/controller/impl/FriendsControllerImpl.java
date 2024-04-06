@@ -22,15 +22,15 @@ public class FriendsControllerImpl implements FriendsController {
         return ResponseEntity.ok(friendService.getFriendList(userid));
     }
 
-    @Override
-    public ResponseEntity<ShortMessageResponse> subscribeToNotificationsFromUser(int id, int userid) {
-        return ResponseEntity.ok(notificationService.subscribe(userid, id));
-    }
-
-    @Override
-    public ResponseEntity<ShortMessageResponse> unsubscribeFromNotificationsFromUser(int id, int userid) {
-        return ResponseEntity.ok(notificationService.unsubscribe(userid, id));
-    }
+//    @Override
+//    public ResponseEntity<ShortMessageResponse> subscribeToNotificationsFromUser(int id, int userid) {
+//        return ResponseEntity.ok(notificationService.subscribe(userid, id));
+//    }
+//
+//    @Override
+//    public ResponseEntity<ShortMessageResponse> unsubscribeFromNotificationsFromUser(int id, int userid) {
+//        return ResponseEntity.ok(notificationService.unsubscribe(userid, id));
+//    }
 
     @Override
     public ResponseEntity<ShortMessageResponse> removeFromFriendList(int id, int userid) {
