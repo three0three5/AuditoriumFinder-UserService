@@ -49,7 +49,7 @@ public interface RequestsController {
 
     @Operation(summary = "Отклонить запрос в друзья", description = "Логика подобна" +
             "предыдущему методу. Запрос от id к userid (входящая). Возвращается короткий профиль " +
-            "стороннего пользователя")
+            "стороннего пользователя, если заявки не существует - 404 с сообщением ошибки")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
