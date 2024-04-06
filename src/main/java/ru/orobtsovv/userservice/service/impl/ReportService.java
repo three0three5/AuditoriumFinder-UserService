@@ -3,6 +3,7 @@ package ru.orobtsovv.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.entity.ReportEntity;
@@ -12,12 +13,14 @@ import ru.orobtsovv.userservice.dto.request.ReportRequest;
 import ru.orobtsovv.userservice.dto.response.ReportInfoResponse;
 import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
+import ru.orobtsovv.userservice.exception.NotFoundException;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.ReportMapper;
 
 import java.util.List;
 
 import static ru.orobtsovv.userservice.utils.constants.CommonConstants.REPORT_REMOVED;
+import static ru.orobtsovv.userservice.utils.constants.ExceptionConstants.REPORT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class ReportService {
     private final ProfileRepository profileRepository;
     private final ReportMapper mapper;
 
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<ReportInfoResponse> getAllReports() { // TODO пагинация
         return repository.findAllByDeletedBy(null).stream()
                 .map(mapper::reportEntityToReportInfoResponse).toList();
@@ -34,7 +38,9 @@ public class ReportService {
 
     public ShortMessageResponse declineReport(int moderatorId, long id) {
         log.info(moderatorId + " is declining report " + id);
-        repository.delete(id);
+        int affected = repository.delete(id, moderatorId);
+        log.info("affected %d report rows".formatted(affected));
+        if (affected == 0) throw new NotFoundException(REPORT_NOT_FOUND.formatted(id));
         return new ShortMessageResponse()
                 .setMessage(REPORT_REMOVED);
     }

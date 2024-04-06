@@ -17,5 +17,4 @@ public class BanRequest {
     @ValidDate
     private LocalDateTime bannedUntil;
     private String reason;
-    private int moderatorId;
 }

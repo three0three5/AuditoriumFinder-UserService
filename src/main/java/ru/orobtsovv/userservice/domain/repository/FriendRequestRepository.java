@@ -19,10 +19,10 @@ public interface FriendRequestRepository extends JpaRepository<RequestEntity, Re
     int deleteAllRequests(int userid);
 
     @Query("select r.from from RequestEntity r " +
-            "where r.to=:userid")
+            "where r.to.userid=:userid")
     List<ProfileEntity> findIncomingRequests(int userid);
 
     @Query("select r.to from RequestEntity r " +
-            "where r.from=:userid")
+            "where r.from.userid=:userid")
     List<ProfileEntity> findOutgoingRequests(int userid);
 }

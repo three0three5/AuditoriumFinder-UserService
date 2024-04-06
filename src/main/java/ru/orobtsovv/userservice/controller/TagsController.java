@@ -28,7 +28,7 @@ public interface TagsController {
     @PostMapping("/add")
     ResponseEntity<List<TagResponse>> addTags(
             @RequestHeader int userid,
-            @RequestParam List<String> tagId);
+            @RequestParam(name = "id") List<String> tagId);
 
     // TODO: изменить List<String> на более конкретную реализацию
     @Operation(summary = "Удалить тег(и) из профиля",
@@ -40,7 +40,7 @@ public interface TagsController {
     @PostMapping("/remove")
     ResponseEntity<List<TagResponse>> removeTags(
             @RequestHeader int userid,
-            @RequestParam List<String> tagId);
+            @RequestParam(name = "id") List<String> tagId);
 
     @Operation(summary = "Получить список всех тегов",
             description = "Предоставляет все существующие теги системы")

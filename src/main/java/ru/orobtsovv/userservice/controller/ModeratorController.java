@@ -39,7 +39,7 @@ public interface ModeratorController {
     })
     @PostMapping("/reports/{id}/decline")
     ResponseEntity<ShortMessageResponse> declineReport(
-            @RequestHeader int userid,
+            @RequestHeader(name = "userid") int userid,
             @PathVariable long id);
 
     @Operation(summary = "Забанить пользователя",
@@ -50,8 +50,10 @@ public interface ModeratorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
-    @PostMapping("/{id}/ban")
-    ResponseEntity<ShortMessageResponse> banUser(@Valid @RequestBody BanRequest banRequest);
+    @PostMapping("/ban")
+    ResponseEntity<ShortMessageResponse> banUser(
+            @RequestHeader(name = "userid") int userid,
+            @Valid @RequestBody BanRequest banRequest);
 
     @Operation(summary = "Получение профиля",
             description = "Позволяет получить все поля пользователя")

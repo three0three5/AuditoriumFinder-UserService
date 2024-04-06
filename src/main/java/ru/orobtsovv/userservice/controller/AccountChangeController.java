@@ -9,12 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
+import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
 
 import static ru.orobtsovv.userservice.utils.constants.SwaggerConstants.SUCCESS;
 
@@ -29,7 +30,7 @@ public interface AccountChangeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = SUCCESS)
     })
-    @PostMapping
+    @PutMapping("/")
     ResponseEntity<FullProfileResponse> createProfile(
             @Valid @RequestBody ProfileCreateRequest profileCreateRequest);
 
@@ -39,7 +40,7 @@ public interface AccountChangeController {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @DeleteMapping("/{userid}/tg")
-    ResponseEntity<FullProfileResponse> removeTelegram(@PathVariable int userid);
+    ResponseEntity<ShortUserResponse> removeTelegram(@PathVariable int userid);
 
     @Operation(summary = "Добавление телеграма",
             description = "Добавляет в профиль запись о телеграме (видимость по умолчанию private)")
@@ -47,7 +48,7 @@ public interface AccountChangeController {
             @ApiResponse(responseCode = "200", description = SUCCESS)
     })
     @PatchMapping("/{userid}/tg")
-    ResponseEntity<FullProfileResponse> addTelegram(
+    ResponseEntity<ShortUserResponse> addTelegram(
             @PathVariable int userid,
             @RequestParam(name = "telegram_handle") String telegramHandle);
 }
