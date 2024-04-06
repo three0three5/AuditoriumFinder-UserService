@@ -2,6 +2,7 @@ package ru.orobtsovv.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.entity.TagEntity;
 import ru.orobtsovv.userservice.domain.repository.ProfileRepository;
@@ -20,6 +21,7 @@ public class TagService {
     private final ProfileRepository profileRepository;
     private final TagMapper tagMapper;
 
+    @Transactional
     public List<TagResponse> addTags(int userid, List<String> tagIds) {
         ProfileEntity entity = profileRepository.findById(userid)
                 .orElseThrow(ProfileNotFoundException::new);
@@ -29,6 +31,7 @@ public class TagService {
         return entity.getTags().stream().map(tagMapper::tagEntityToTagResponse).toList();
     }
 
+    @Transactional
     public List<TagResponse> removeTags(int userid, List<String> tagIds) {
         ProfileEntity entity = profileRepository.findById(userid)
                 .orElseThrow(ProfileNotFoundException::new);

@@ -2,6 +2,8 @@ package ru.orobtsovv.userservice.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -29,13 +31,15 @@ public class ProfileEntity {
     @Column(name = "tg_handle")
     private String telegramHandle;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column(name = "tg_visibility")
+    @Enumerated(value = EnumType.STRING)
     private FieldVisibility telegramVisibility = FieldVisibility.PRIVATE;
 
     @Column(name = "email_visibility")
+    @Enumerated(value = EnumType.STRING)
     private FieldVisibility emailVisibility = FieldVisibility.PRIVATE;
 
     @ManyToMany

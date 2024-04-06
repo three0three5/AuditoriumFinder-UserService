@@ -10,16 +10,17 @@ import java.util.List;
 
 public interface ReportRepository extends JpaRepository<ReportEntity, Long> {
     @Query("delete from ReportEntity r " +
-            "where r.to=:userid")
+            "where r.to.userid=:userid")
     @Modifying
     @Transactional
     int deleteReports(int userid);
 
-    @Query("select r from ReportEntity r " +
+    @Query("update ReportEntity r " +
+            "set r.deletedBy=:moderatorId " +
             "where r.deletedBy is null and r.id=:id")
     @Modifying
     @Transactional
-    void delete(long id);
+    int delete(long id, int moderatorId);
 
     List<ReportEntity> findAllByDeletedBy(Integer deletedBy);
 }

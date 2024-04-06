@@ -2,7 +2,7 @@
 
 #### Опциональные параметры:
 
-SPRING_PROFILE - опционально; основные значения: with-mocks, development, email-mock;
+SPRING_PROFILE - опционально; основные значения: with-mocks, development;
 
 - with-mocks - все сервисы заменяются на заглушки (по умолчанию)
 - development - без заглушек
