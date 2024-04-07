@@ -26,8 +26,6 @@ public class ProfileDeleteListener implements ApplicationListener<ProfileDeleteE
     public void onApplicationEvent(ProfileDeleteEvent event) {
         ProfileDeleteMessage message = event.getMessage();
         log.info("Caught profile delete event: %s".formatted(message));
-        destinationQueues.forEach(destination -> {
-            template.convertAndSend(destination, message);
-        });
+        destinationQueues.forEach(destination -> template.convertAndSend(destination, message));
     }
 }
