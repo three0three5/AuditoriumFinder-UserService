@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import ru.orobtsovv.userservice.dto.messages.ProfileDeleteMessage;
+import ru.orobtsovv.userservice.eventlistener.event.ProfileDeleteEvent;
 
 @Service
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ import ru.orobtsovv.userservice.dto.messages.ProfileDeleteMessage;
 @Slf4j
 public class MessageQueryServiceMock {
 
-    public void sendDeletedProfile(ProfileDeleteMessage message) {
+    public void sendDeletedProfile(ProfileDeleteEvent message) {
         // TODO emit event through mq
         log.info("Delete profile message sent");
     }
