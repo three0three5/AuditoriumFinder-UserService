@@ -2,10 +2,12 @@ package ru.orobtsovv.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.repository.ReportRepository;
 import ru.orobtsovv.userservice.dto.messages.ProfileDeleteMessage;
+import ru.orobtsovv.userservice.eventlistener.event.ProfileDeleteEvent;
 import ru.orobtsovv.userservice.dto.request.BanRequest;
 import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 
@@ -16,7 +18,7 @@ import static ru.orobtsovv.userservice.utils.constants.CommonConstants.DELETED_P
 @Slf4j
 public class BanService {
     private final DeleteService deleteService;
-    private final MessageQueryServiceMock queryService;
+    private final ApplicationEventPublisher eventPublisher;
     private final ReportRepository reportRepository;
 
     @Transactional
@@ -25,7 +27,7 @@ public class BanService {
         int affected = reportRepository.deleteReports(request.getUserid());
         log.info("affected %d report rows".formatted(affected));
         ProfileDeleteMessage event = mapFromBanRequest(moderatorId, request);
-        queryService.sendDeletedProfile(event);
+        eventPublisher.publishEvent(new ProfileDeleteEvent(this, event));
         return new ShortMessageResponse(DELETED_PROFILE_SUCCESS.formatted(request.getUserid()));
     }
 

@@ -47,4 +47,8 @@ public class FriendService {
         profileRepository.save(second);
         return new ShortMessageResponse(FRIEND_REMOVED.formatted(second.getNickname()));
     }
+
+    public Boolean areFriends(int id1, int id2) {
+        return profileRepository.areFriends(id1, id2);
+    }
 }

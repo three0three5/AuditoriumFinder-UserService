@@ -3,7 +3,7 @@ package ru.orobtsovv.userservice.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
-import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
+import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
 import ru.orobtsovv.userservice.model.FieldVisibility;

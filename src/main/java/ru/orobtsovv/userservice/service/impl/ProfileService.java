@@ -8,10 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.repository.ProfileRepository;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
-import ru.orobtsovv.userservice.dto.request.ProfileCreateRequest;
+import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
-import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.ProfileMapper;
 
@@ -22,25 +21,22 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileMapper profileMapper;
 
-    public FullProfileResponse createProfile(ProfileCreateRequest profileCreateRequest) {
+    public void createProfile(ProfileCreateRequest profileCreateRequest) {
         ProfileEntity entity = profileMapper.profileCreateRequestToProfileEntity(profileCreateRequest);
-        entity = profileRepository.save(entity);
-        return profileMapper.profileEntityToFullProfileResponse(entity);
+        profileRepository.save(entity);
     }
 
 
-    public ShortUserResponse removeTelegram(int userid) {
+    public void removeTelegram(int userid) {
         ProfileEntity entity = profileRepository.findById(userid).orElseThrow(ProfileNotFoundException::new);
         entity.setTelegramHandle(null);
         profileRepository.save(entity);
-        return profileMapper.profileEntityToShortUserResponse(entity);
     }
 
-    public ShortUserResponse addTelegram(int userid, String telegramHandle) {
+    public void addTelegram(int userid, String telegramHandle) {
         ProfileEntity entity = profileRepository.findById(userid).orElseThrow(ProfileNotFoundException::new);
         entity.setTelegramHandle(telegramHandle);
         profileRepository.save(entity);
-        return profileMapper.profileEntityToShortUserResponse(entity);
     }
 
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
