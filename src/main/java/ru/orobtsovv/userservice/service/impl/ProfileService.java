@@ -2,15 +2,18 @@ package ru.orobtsovv.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.repository.ProfileRepository;
+import ru.orobtsovv.userservice.dto.messages.ProfileUpdateMessage;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
 import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
+import ru.orobtsovv.userservice.eventlistener.event.ProfileUpdateEvent;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.ProfileMapper;
 
@@ -20,6 +23,7 @@ import ru.orobtsovv.userservice.mapper.ProfileMapper;
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileMapper profileMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void createProfile(ProfileCreateRequest profileCreateRequest) {
         ProfileEntity entity = profileMapper.profileCreateRequestToProfileEntity(profileCreateRequest);
@@ -48,8 +52,16 @@ public class ProfileService {
     @Transactional
     public FullProfileResponse editNickname(int userid, ProfileChangeRequest profileChangeRequest) {
         ProfileEntity entity = profileRepository.findById(userid).orElseThrow(ProfileNotFoundException::new);
+
+        String oldNickname = entity.getNickname();
         entity.setNickname(profileChangeRequest.getNickname());
         profileRepository.save(entity);
+
+        var message = new ProfileUpdateMessage()
+                .setUserid(entity.getUserid())
+                .setOldNickname(oldNickname)
+                .setNewNickname(profileChangeRequest.getNickname());
+        eventPublisher.publishEvent(new ProfileUpdateEvent(this, message));
         return profileMapper.profileEntityToFullProfileResponse(entity);
     }
 
