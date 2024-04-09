@@ -6,7 +6,7 @@ import ru.orobtsovv.userservice.dto.messages.ProfileUpdateMessage;
 
 @Getter
 public class ProfileUpdateEvent extends ApplicationEvent {
-    private ProfileUpdateMessage message;
+    private final ProfileUpdateMessage message;
     public ProfileUpdateEvent(Object source, ProfileUpdateMessage message) {
         super(source);
         this.message = message;
