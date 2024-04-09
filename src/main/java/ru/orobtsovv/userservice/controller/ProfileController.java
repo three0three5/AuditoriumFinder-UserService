@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
+import ru.orobtsovv.userservice.dto.request.ProfilesRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
+
+import java.util.Map;
 
 import static ru.orobtsovv.userservice.utils.constants.SwaggerConstants.SUCCESS;
 
@@ -53,4 +56,12 @@ public interface ProfileController {
     ResponseEntity<FullProfileResponse> changeVisibility(
             @RequestHeader int userid,
             @Valid @RequestBody VisibilityChangeRequest visibilityChangeRequest);
+
+    @Operation(summary = "Получить по списку id список полных профилей",
+            description = "Вид профилей зависит от наличия пользователя в списке друзей " +
+                    "того пользователя, который отправляет запрос")
+    @GetMapping("/listed")
+    ResponseEntity<Map<Integer, FullProfileResponse>> mapIntToProfiles(
+            @RequestHeader(name = "userid") int userid,
+            @Valid @RequestBody ProfilesRequest request);
 }
