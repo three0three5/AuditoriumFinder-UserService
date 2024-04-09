@@ -8,14 +8,19 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.orobtsovv.userservice.domain.entity.ProfileEntity;
 import ru.orobtsovv.userservice.domain.repository.ProfileRepository;
+import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.messages.ProfileUpdateMessage;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
-import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
+import ru.orobtsovv.userservice.dto.request.ProfilesRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.eventlistener.event.ProfileUpdateEvent;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.mapper.ProfileMapper;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -94,5 +99,18 @@ public class ProfileService {
         }
         profileRepository.save(entity);
         return profileMapper.profileEntityToFullProfileResponse(entity);
+    }
+
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    public Map<Integer, FullProfileResponse> mapIdsToProfiles(int userid, ProfilesRequest request) {
+        Map<Integer, FullProfileResponse> result = new HashMap<>();
+        List<ProfileEntity> entities = profileRepository.findAllById(request.getIds());
+        entities.stream()
+                .map(entity -> {
+                    boolean areFriends = profileRepository.areFriends(userid, entity.getUserid());
+                    return profileMapper.profileEntityToFullProfileResponseFiltered(entity, areFriends);
+                })
+                .forEach(profile -> result.put(profile.getUserid(), profile));
+        return result;
     }
 }
