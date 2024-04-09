@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import ru.orobtsovv.userservice.dto.messages.FriendRequestAcceptedMessage;
 import ru.orobtsovv.userservice.eventlistener.event.FriendAcceptEvent;
 
 import static ru.orobtsovv.userservice.utils.constants.MQConstants.FRIEND_REQUEST_ACCEPTED;
@@ -17,7 +18,8 @@ public class FriendAcceptListener implements ApplicationListener<FriendAcceptEve
 
     @Override
     public void onApplicationEvent(FriendAcceptEvent event) {
-        log.info("on friend accept: %s".formatted(event));
-        template.convertAndSend(FRIEND_REQUEST_ACCEPTED, event);
+        FriendRequestAcceptedMessage message = event.getMessage();
+        log.info("on friend accept: %s".formatted(message));
+        template.convertAndSend(FRIEND_REQUEST_ACCEPTED, message);
     }
 }

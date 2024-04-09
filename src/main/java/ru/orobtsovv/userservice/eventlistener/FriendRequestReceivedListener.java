@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import ru.orobtsovv.userservice.dto.messages.FriendRequestReceivedMessage;
 import ru.orobtsovv.userservice.eventlistener.event.FriendRequestReceivedEvent;
 
 import static ru.orobtsovv.userservice.utils.constants.MQConstants.FRIEND_REQUEST_RECEIVED;
@@ -17,7 +18,8 @@ public class FriendRequestReceivedListener implements ApplicationListener<Friend
 
     @Override
     public void onApplicationEvent(FriendRequestReceivedEvent event) {
-        log.info("on friend request received: %s".formatted(event));
-        template.convertAndSend(FRIEND_REQUEST_RECEIVED, event);
+        FriendRequestReceivedMessage message = event.getMessage();
+        log.info("on friend request received: %s".formatted(message));
+        template.convertAndSend(FRIEND_REQUEST_RECEIVED, message);
     }
 }

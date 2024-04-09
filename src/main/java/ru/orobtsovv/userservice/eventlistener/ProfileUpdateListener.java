@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import ru.orobtsovv.userservice.dto.messages.ProfileUpdateMessage;
 import ru.orobtsovv.userservice.eventlistener.event.ProfileUpdateEvent;
 
 import static ru.orobtsovv.userservice.utils.constants.MQConstants.PROFILE_UPDATE;
@@ -17,7 +18,8 @@ public class ProfileUpdateListener implements ApplicationListener<ProfileUpdateE
 
     @Override
     public void onApplicationEvent(ProfileUpdateEvent event) {
-        log.info("on profile update: %s".formatted(event));
-        template.convertAndSend(PROFILE_UPDATE, event);
+        ProfileUpdateMessage message = event.getMessage();
+        log.info("on profile update: %s".formatted(message));
+        template.convertAndSend(PROFILE_UPDATE, message);
     }
 }

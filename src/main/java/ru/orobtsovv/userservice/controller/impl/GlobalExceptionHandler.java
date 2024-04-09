@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.orobtsovv.userservice.dto.response.ShortMessageResponse;
 import ru.orobtsovv.userservice.exception.FriendsAlreadyException;
 import ru.orobtsovv.userservice.exception.NotFoundException;
+import ru.orobtsovv.userservice.exception.RequestAlreadyException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -26,6 +27,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(FriendsAlreadyException.class)
     public ShortMessageResponse alreadyFriendException(FriendsAlreadyException e) {
+        return new ShortMessageResponse(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(RequestAlreadyException.class)
+    public ShortMessageResponse alreadyRequestException(RequestAlreadyException e) {
         return new ShortMessageResponse(e.getMessage());
     }
 }

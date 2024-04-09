@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${SPRING_PROFILE:with-mocks}
   jpa:
     hibernate:
       ddl-auto: update
@@ -35,3 +33,6 @@ management:
     health:
       probes:
         enabled: true
+
+server:
+  port: 8081

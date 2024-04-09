@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import ru.orobtsovv.userservice.dto.messages.FriendDeleteMessage;
 import ru.orobtsovv.userservice.eventlistener.event.FriendDeleteEvent;
 
 import static ru.orobtsovv.userservice.utils.constants.MQConstants.FRIEND_LINK_DELETED;
@@ -17,7 +18,8 @@ public class FriendDeleteListener implements ApplicationListener<FriendDeleteEve
 
     @Override
     public void onApplicationEvent(FriendDeleteEvent event) {
-        log.info("on friend delete: %s".formatted(event));
-        template.convertAndSend(FRIEND_LINK_DELETED, event);
+        FriendDeleteMessage message = event.getMessage();
+        log.info("on friend delete: %s".formatted(message));
+        template.convertAndSend(FRIEND_LINK_DELETED, message);
     }
 }
