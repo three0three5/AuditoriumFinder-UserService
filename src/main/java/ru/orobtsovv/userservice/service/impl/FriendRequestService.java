@@ -53,14 +53,14 @@ public class FriendRequestService {
             second.getFriends().add(first);
             profileRepository.save(first);
             profileRepository.save(second);
-            var message = new FriendRequestAcceptedMessage(to, from);
+            var message = new FriendRequestAcceptedMessage(to, from, first.getNickname());
             eventPublisher.publishEvent(new FriendAcceptEvent(this, message));
         } else {
             RequestEntity entity = new RequestEntity();
             entity.setFrom(first);
             entity.setTo(second);
             requestRepository.save(entity);
-            var message = new FriendRequestReceivedMessage(to, from);
+            var message = new FriendRequestReceivedMessage(to, from, first.getNickname());
             eventPublisher.publishEvent(new FriendRequestReceivedEvent(this, message));
         }
         return profileMapper.profileEntityToShortUserResponse(second);

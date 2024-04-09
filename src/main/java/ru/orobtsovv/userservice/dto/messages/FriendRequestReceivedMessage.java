@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class FriendRequestReceivedMessage {
     private int userid;
     private int senderId;
+    private String senderNickname;
 }
