@@ -11,7 +11,6 @@ import ru.orobtsovv.userservice.domain.repository.ProfileRepository;
 import ru.orobtsovv.userservice.dto.messages.ProfileCreateRequest;
 import ru.orobtsovv.userservice.dto.messages.ProfileUpdateMessage;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
-import ru.orobtsovv.userservice.dto.request.ProfilesRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.eventlistener.event.ProfileUpdateEvent;
@@ -102,9 +101,9 @@ public class ProfileService {
     }
 
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
-    public Map<Integer, FullProfileResponse> mapIdsToProfiles(int userid, ProfilesRequest request) {
+    public Map<Integer, FullProfileResponse> mapIdsToProfiles(int userid, List<Integer> ids) {
         Map<Integer, FullProfileResponse> result = new HashMap<>();
-        List<ProfileEntity> entities = profileRepository.findAllById(request.getIds());
+        List<ProfileEntity> entities = profileRepository.findAllById(ids);
         entities.stream()
                 .map(entity -> {
                     boolean areFriends = profileRepository.areFriends(userid, entity.getUserid());

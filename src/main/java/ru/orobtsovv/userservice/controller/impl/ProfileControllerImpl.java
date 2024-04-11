@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.orobtsovv.userservice.controller.ProfileController;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
-import ru.orobtsovv.userservice.dto.request.ProfilesRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 import ru.orobtsovv.userservice.service.impl.ProfileService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,7 +35,7 @@ public class ProfileControllerImpl implements ProfileController {
     }
 
     @Override
-    public ResponseEntity<Map<Integer, FullProfileResponse>> mapIntToProfiles(int userid, ProfilesRequest request) {
-        return ResponseEntity.ok(profileService.mapIdsToProfiles(userid, request));
+    public ResponseEntity<Map<Integer, FullProfileResponse>> mapIntToProfiles(int userid, List<Integer> ids) {
+        return ResponseEntity.ok(profileService.mapIdsToProfiles(userid, ids));
     }
 }
