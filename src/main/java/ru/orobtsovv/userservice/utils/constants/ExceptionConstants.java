@@ -7,4 +7,5 @@ public class ExceptionConstants {
     public static final String FRIEND_NOT_FOUND = "Пользователя %s нет в списке ваших друзей";
     public static final String FRIENDS_ALREADY = "Пользователь уже является вашим другом";
     public static final String REQUEST_EXISTS = "Запрос отправлен";
+    public static final String ILLEGAL_FRIEND_REQUEST = "Нельзя отправить запрос";
 }
