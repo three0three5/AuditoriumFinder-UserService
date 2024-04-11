@@ -15,6 +15,7 @@ import ru.orobtsovv.userservice.dto.response.ShortUserResponse;
 import ru.orobtsovv.userservice.eventlistener.event.FriendAcceptEvent;
 import ru.orobtsovv.userservice.eventlistener.event.FriendRequestReceivedEvent;
 import ru.orobtsovv.userservice.exception.FriendsAlreadyException;
+import ru.orobtsovv.userservice.exception.IllegalFriendRequestException;
 import ru.orobtsovv.userservice.exception.ProfileNotFoundException;
 import ru.orobtsovv.userservice.exception.RequestAlreadyException;
 import ru.orobtsovv.userservice.exception.RequestNotFoundException;
@@ -42,6 +43,7 @@ public class FriendRequestService {
 
     @Transactional
     public ShortUserResponse makeRequest(int from, int to) {
+        if (from == to) throw new IllegalFriendRequestException();
         if (profileRepository.areFriends(from, to)) throw new FriendsAlreadyException();
         if (requestRepository.existsById(new RequestEntityId(from, to))) throw new RequestAlreadyException();
         RequestEntityId opposite = new RequestEntityId(to, from);
