@@ -47,7 +47,7 @@ public interface RequestsController {
             @RequestHeader int userid,
             @PathVariable int id);
 
-    @Operation(summary = "Отклонить запрос в друзья", description = "Логика подобна" +
+    @Operation(summary = "Отклонить запрос в друзья", description = "Логика подобна " +
             "предыдущему методу. Запрос от id к userid (входящая). Возвращается короткий профиль " +
             "стороннего пользователя, если заявки не существует - 404 с сообщением ошибки")
     @ApiResponses(value = {

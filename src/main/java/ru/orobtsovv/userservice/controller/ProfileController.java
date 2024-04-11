@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.orobtsovv.userservice.dto.request.ProfileChangeRequest;
-import ru.orobtsovv.userservice.dto.request.ProfilesRequest;
 import ru.orobtsovv.userservice.dto.request.VisibilityChangeRequest;
 import ru.orobtsovv.userservice.dto.response.FullProfileResponse;
 
+import java.util.List;
 import java.util.Map;
 
 import static ru.orobtsovv.userservice.utils.constants.SwaggerConstants.SUCCESS;
@@ -63,5 +63,5 @@ public interface ProfileController {
     @GetMapping("/listed")
     ResponseEntity<Map<Integer, FullProfileResponse>> mapIntToProfiles(
             @RequestHeader(name = "userid") int userid,
-            @Valid @RequestBody ProfilesRequest request);
+            @RequestParam List<Integer> ids);
 }
